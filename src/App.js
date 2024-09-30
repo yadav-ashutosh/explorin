@@ -1,23 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
-
+import React, { useState } from 'react';
+import { Paper, AppBar, Tabs, Tab, Box, Button } from '@mui/material';
+import SimpleTable from './components/Worker';
+import OtherComponent from './components/Other';
 function App() {
+  const [tabValue, setTabValue] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <div className="App">
+       <Paper sx={{ width: 'auto' , padding: '26px' }}>
+       <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
+        <h2>Create workorder</h2>
+        <Button sx={{ backgroundColor: '#63d2d1', color: 'white', height: '50%'}}>
+          Save
+        </Button>
+      </Box>
+      <AppBar position="static" color="default" >
+        <Tabs
+          value={tabValue}
+          onChange={handleTabChange}
+          indicatorColor="primary"
+          textColor="primary"
         >
-          Learn React
-        </a>
-      </header>
+          <Tab label="Overview" />
+          <Tab label="Other" />
+        </Tabs>
+      </AppBar>
+      {tabValue === 0 && <SimpleTable />}
+      {tabValue === 1 && <OtherComponent />}
+      
+    </Paper>
     </div>
   );
 }
